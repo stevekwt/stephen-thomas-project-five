@@ -3,6 +3,7 @@ import firebase from './firebase.js';
 import { Component } from 'react';
 import { randomNumber } from './randomizers.js';
 import DisplayRandomGoal from './DisplayRandomGoal.js';
+import DisplayForm from './DisplayForm.js';
 
 // 1. configure firebase on react -- 
 // 2. connect firebase data to the state -- 
@@ -12,18 +13,22 @@ import DisplayRandomGoal from './DisplayRandomGoal.js';
 // 6. create input form, to get user input value 
 // 7. on submit of form, submit user input value to firebase
 
-// getRandomNumber = () => {
-const generatedNumber = randomNumber();
-  // }
 
 class App extends Component {
+  
+  // getRandomNumber = () => {
+  generatedNumber = randomNumber();
+    // }
+
+  // goalsArray = [];
 
   constructor() {
     super();
     this.state = {
+      featuredGoal: '',
       goals: [
         {
-          id: "1",
+          id: "a million",
           goal: "testing 123"
         }
       ],
@@ -36,203 +41,166 @@ class App extends Component {
   ]
 
   componentDidMount() {
+
     // "Here we create a variable that holds a reference to our database"
-    const dbRef = firebase.database().ref()
-    // TODO
+    const dbRef = firebase.database().ref();
     console.log(`COMPONENT MOUNTED, and dbRef is`, dbRef);
-    // "add an event listener to that variable that fires
-    // every time there is a change in the database.
-    // Event listener takes a callback function that gets our data"
-    dbRef.on('value', (data) => {
-          // use Firebase's .val() method to parse our database info the way we want it
-          const firebaseDataObj = data.val();
-          // TODO
-          console.log(`VALUE CHANGED, AND firebaseDataObj is`, firebaseDataObj);
-          // make a new empty array for goals
-          let goalsArray = [];
-          // use for-in loop to loop through the object we get from firebase
-          for (let propertyKey in firebaseDataObj) {
-                // propertyKey = 'g1', 'g2' etc
-                // extracting the key and value of the object
-                const propertyVal = firebaseDataObj[propertyKey];
-                // console.log(`propertyVal is`, propertyVal);
-                // format it to the way we want it
-                const formattedObj = { id: propertyKey, name: propertyVal }
-                // push each new item in the loop into the empty array
-                goalsArray.push(formattedObj);
-          }
-          // TODO
-          console.log(`goalsArray (temporary array created upon mount) is`, goalsArray);
+
+    // call function component that grabs firebase data & creates array from it
+    // doesn't need any params, but returns an array
+    // populateNewArrayFromFirebaseData();
+    dbRef.once("value", (data) => {
+      // use Firebase's .val() method to parse our dat-abase info the way we want it
+      const firebaseDataObj = data.val();
+      console.log(`in 'once' method, AND firebaseDataObj is`, firebaseDataObj);
+      // make a new empty array for goals
+      let goalsArray = [];
+      // use for-in loop to loop through the object we get from firebase
+      for (let propertyKey in firebaseDataObj) {
+        // propertyKey = 'g1', 'g2' etc
+        // extracting the key and value of the object
+        const propertyVal = firebaseDataObj[propertyKey];
+        // console.log(`propertyVal is`, propertyVal);
+        // format it to the way we want it
+        const formattedObj = { id: propertyKey, name: propertyVal }
+        // push each new item in the loop into the empty array
+        goalsArray.push(formattedObj);
+      }
+      console.log(`goalsArray (temporary array created upon mount for random thing) is`, goalsArray, `and its length is`, goalsArray.length);
           // updating our this.state.goals state with firebase data
           this.setState({
-            goals: goalsArray
+            featuredGoal: this.displayRandomGoalInternal(goalsArray)
           })
-    })
+    });
+
+    // then in this component's render(), add random item to page,
+    // and for everything else, i.e. state changes, put in different components
+    // 
+
   }
   
-  handleSubmit = (e) => {
-    e.preventDefault();
-    
-    // on form submit, ping firebase and create a reference object with the most up-to-date version of the data
-    const dbRef = firebase.database().ref();
-    
-    // is there a way to grab the form submit w/o the key-by-key method?
-    // console.log(e);
-    const inputtedText = document.getElementById("newGoal").value;
-    console.log(inputtedText);
-
-    // add (push) the user's input, as grabbed by button submit, 
-    // dbRef.push(this.state.userInput);
-    dbRef.push(inputtedText);
-    // TODO
-    console.log(`this.state.goals is ${this.state.goals}`);
-    // clear the text input field
-    document.querySelector('input').value = '';
-  }
-
-  handleInputChange = (e) => {
-    // console.log(`e.target.value is`, e.target.value);
-    this.setState({
-      userInput: e.target.value
-    })
-  }
-
-  removeGoal = (goalId) => {
-    const dbRef = firebase.database().ref();
-    // a way to remove a record off the face of firebase
-    // .child() is going to locate the particular record
-    // .remove() is going to remove the record
-    dbRef.child(goalId).remove();
-  }
-
   displayRandomGoalInternal = (inputtedArray) => {
+    console.log(`inputtedArray in displayRandomGoal is`, inputtedArray);
+    // inputtedArray[0] = "1";
+    console.log(inputtedArray);
+    console.log(inputtedArray.length);
     const randomArrayIndex = Math.floor(Math.random() * inputtedArray.length);
     console.log(`randomArrayIndex is`, randomArrayIndex);
     console.log(`inputtedArray[randomArrayIndex] is`, inputtedArray[randomArrayIndex]);
     // get the goal property of a random item from the array
+    // return inputtedArray[randomArrayIndex];
+    // normally:
     return inputtedArray[randomArrayIndex].name;
+    // return "testing ok good";
   }
 
   render() {
-    console.log(`this.state.goals is`, this.state.goals);
-    console.log(this.displayRandomGoalInternal(this.state.goals));
-    // console.log(thisremoveGoal());
+    console.log(`this.goalsArray inside the main render is`, this.goalsArray);
+    let testArray = [
+      {"1": "test"}, 2, 3, 4, 5
+    ]
+    console.log(testArray);
+    console.log(testArray[3]);
+    console.log(`testArray.length is`, testArray.length);
+    
     return (
       <div>
         <h1>Essay Idea DB</h1>
 
-        <form action="">
-          <label htmlFor="newGoal">What do you want someone to write about? </label>
-          <input
-            type="text"
-            id="newGoal"
-            // onChange={this.handleInputChange}
-          />
-          <button onClick={this.handleSubmit}>Add</button>
-        </form>
-
-        <QuestionForm
-
+        {/* DISPLAY FORM HERE */}
+        <DisplayForm 
+          displayRandomGoalInternal={this.displayRandomGoalInternal}
         />
 
         <div className="mainDisplayGoal">
           <p>
-            Random number: <strong>{generatedNumber}</strong>
+            Random number: <strong>{this.generatedNumber}</strong>
           </p>
-
+{/* 
           <p>Now a randomly displayed goal from internal function:&nbsp;<strong>
             {this.displayRandomGoalInternal(this.state.goals)}</strong>
           </p>
-
+*/}
           <p>
             And from the external component:
               <DisplayRandomGoal
                   // item={this.state.goals[0].id}
-                  goal={this.displayRandomGoalInternal(this.state.goals)}
+                  // goal={this.displayRandomGoalInternal(testArray)}
+                  goal={this.state.featuredGoal}
               />
           </p>
-          <p>
+
+          {/* <p>
             And from the component where the randomizing logic is done in-component:
             <RandomStuff
               message={"hello"}
             />
-          </p>
+          </p>  */}
 
-          <p>
+          {/* <p>
             And cool beans business:&nbsp;
             <CoolBeans 
-              array={this.state.goals}
+              array={this.goalsArray}
             />
-          </p>
+          </p>  */}
 
         </div>
 
-        <ul>
-          {
-            this.state.goals.map((goal) => {
-              // console.log(`goal.name is`, goal.name);
-              return (
-                <li key={goal.id}>
-                  <p>{goal.name} </p>
-                  <button onClick={ () => (this.removeGoal(goal.id)) }>remove</button>
-                </li>
-              )
-            })
-          }
-        </ul>
+        {/* DISPLAY LIST OF ITEMS HERE */}
 
       </div>
     )
   }
 }
 
-class RandomStuff extends Component {
-  render() {
-    const hello = 'say hello';
-    return (
-      <div>
-        <span><strong>{this.props.message}</strong></span>
-      </div>
-    )
-  }
-}
+// class RandomStuff extends Component {
+//   render() {
+//     const hello = 'say hello';
+//     return (
+//         <span>
+//           <strong>{this.props.message}</strong>
+//         </span>
+//     )
+//   }
+// }
 
-class QuestionForm extends Component {
-  render() {
-    return (
-      <form action="">
-        <label htmlFor="newGoal">(external class form) What someone should write? </label>
-        <input
-          type="text"
-          id="newGoal"
-        // onChange={this.handleInputChange}
-        />
-        <button onClick={this.handleSubmit}>Add</button>
-      </form>
-    )
-  }
-}
+// class QuestionForm extends Component {
+//   render() {
+//     return (
+//       <form action="">
+//         <label htmlFor="newGoal">(external class form) What someone should write? </label>
+//         <input
+//           type="text"
+//           id="newGoal"
+//         // onChange={this.handleInputChange}
+//         />
+//         <button onClick={this.handleSubmit}>Add</button>
+//       </form>
+//     )
+//   }
+// }
 
-class CoolBeans extends Component {
-  displayRandomItem = (inputtedArray) => {
-    const randomArrayIndex = Math.floor(Math.random() * inputtedArray.length);
-    console.log(`randomArrayIndex is`, randomArrayIndex);
-    console.log(`inputtedArray[randomArrayIndex] is`, inputtedArray[randomArrayIndex]);
-    // get the goal property of a random item from the array
-    return inputtedArray[randomArrayIndex].name;
-  }
-  testArray = [
-    1, 2, 3, 4, 5
-  ]
-  render () {
-    return (
-      <span>
-        <strong> 
-          {this.displayRandomItem(this.props.array)}
-        </strong>
-      </span>
-    )
-  }
-}
+// class CoolBeans extends Component {
+//   displayRandomItem = (inputtedArray) => {
+//     const randomArrayIndex = Math.floor(Math.random() * inputtedArray.length);
+//     console.log(`randomArrayIndex is`, randomArrayIndex);
+//     console.log(`inputtedArray[randomArrayIndex] is`, inputtedArray[randomArrayIndex]);
+//     // get the goal property of a random item from the array
+//     return inputtedArray[randomArrayIndex].name;
+//   }
+//   testArray = [
+//     1, 2, 3, 4, 5
+//   ]
+//   render () {
+//     return (
+//       <span>
+//         <strong> 
+//           {this.displayRandomItem(this.props.array)}
+//         </strong>
+//       </span>
+//     )
+//   }
+// }
+
 
 export default App;
