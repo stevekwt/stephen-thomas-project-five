@@ -1,6 +1,6 @@
 
 const DisplayRandomGoal = ({ goal }) => {
-    console.log(`goal in dedicated component is`, goal);
+    // console.log(`goal in dedicated component is`, goal);
     return (
         <span>
             <strong> {goal}</strong> 
