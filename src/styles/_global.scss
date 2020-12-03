@@ -1,0 +1,116 @@
+body, button {
+    font-family: 'Kameron', serif;
+}
+
+body {
+    background-color: black;
+    font-size: 62.5%;
+    font-size: 1.2rem;
+}
+
+header {
+    background-color: white;
+    margin: 0;
+    padding: 50px;
+}
+
+section, div {
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    width: 60%;
+    // max-width: 400px;
+    margin: 0 auto;
+    // border: 1px solid red;
+}
+
+h1 {
+    text-align: center;
+    margin: 0;
+    font-family: 'Permanent Marker', cursive;
+}
+
+button {
+    border: none;
+    align-self: center;
+    cursor: pointer;
+    //   margin-left: 15px;
+}
+
+.inputFormSection {
+    background-color: black;
+    .internalFormDiv {
+        background-color: white;
+        padding: 0 0 40px;
+        form {
+            // box-shadow: 2px 2px black;
+            text-align: center;
+        }
+        .newGoal {
+            font-size: 1.7rem;
+        }
+        .textAndButton {
+            height: 50px;
+        }
+        .ideaTextField {
+            border: 2px solid #000;
+            margin: 15px 0;
+            padding: 10px;
+            width: 500px;
+            height: 100%;
+        }
+        .addButton {
+            height: 100%;
+            padding: 0 30px;
+        }
+    }
+}
+
+.randomItem {
+    background-color: rgb(131, 236, 247);
+}
+.internalRandomDiv {
+    // box-shadow: 2px 2px black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 40px;
+    .randomIntroText {
+        width: 70px;
+        font-size: 1.7rem;
+    }
+    .randomEssayIdea {
+        font-weight: bold;
+    }
+    .anotherButton {
+        padding: 20px 10px;
+        border: 1px solid grey;
+        border-radius: 20px;
+    }
+}
+
+
+.itemList {
+    background-color: black;
+}
+.internalListDiv {
+    background-color: white;
+    padding: 10px 40px;
+    h2 {
+        margin: 5px 0;
+        text-align: center;
+    }
+}
+ul {
+  padding: 0;
+    li {
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid lightgray;
+        padding: 10px;
+        box-shadow: 2px 2px black;
+        margin: 10px 0;
+    }
+}

@@ -1,6 +1,6 @@
-import "./App.css";
+import "./App.scss";
 import firebase from "./firebase.js";
-import { Component } from "react";
+import { Component, Fragment } from "react";
 import DisplayForm from "./DisplayForm.js";
 
 class App extends Component {
@@ -71,8 +71,10 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Essay Idea DB</h1>
+      <Fragment>
+        <header>
+          <h1>Essay Idea DB</h1>
+        </header>
 
         <DisplayForm
           goalsArray={this.state.goalsArray}
@@ -82,7 +84,7 @@ class App extends Component {
           getRandomGoal={this.getRandomGoal}
         />
         
-      </div>
+      </Fragment>
     );
   }
 }

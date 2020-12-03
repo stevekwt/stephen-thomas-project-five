@@ -1,6 +1,6 @@
-import "./App.css";
+import "./App.scss";
 // import firebase from "./firebase.js";
-import { Component } from "react";
+import { Component, Fragment } from "react";
 class DisplayForm extends Component {
   constructor(props) {
     super(props);
@@ -37,7 +37,7 @@ class DisplayForm extends Component {
     return goalsArray.map(({ id, value }) => {
       return (
         <li key={id}>
-          <p>{value} </p>
+          {value}
           <button onClick={() => this.removeGoal(id)}>remove</button>
         </li>
       );
@@ -46,27 +46,50 @@ class DisplayForm extends Component {
 
   render() {
     return (
-      <div>
+      <Fragment>
         
         {/* // FORM */}
-        <form action="">
-          <label htmlFor="newGoal">What do you want someone to write about? </label>
-          <input type="text" id="newGoal" onChange={this.handleInputChange} />
-          <button onClick={this.handleSubmit}>Add</button>
-        </form>
+        <section className="inputFormSection">
+          <div className="internalFormDiv wrapper">
+          <form action="">
+
+            <label htmlFor="newGoal" className="newGoal" >What do you want someone to write about? </label>
+
+            <div className="textAndButton">
+
+              <input type="text" id="newGoal" className="ideaTextField" placeholder="Something that helps explain the world..?" onChange={this.handleInputChange} />
+
+              <button className="addButton" onClick={this.handleSubmit}>Add</button>
+
+            </div>
+            
+
+          </form>
+          </div>
+        </section>
 
         {/* // RANDOM ITEM */}
+        <section className="randomItem">
+          <div className="internalRandomDiv wrapper">
+            <span className="randomIntroText">Random Essay Idea: </span>
+              
+            <span className="randomEssayIdea">{this.props.displayRandomThing}</span> 
 
-        <p>Random Essay Idea: <strong>{this.props.displayRandomThing}</strong> 
-            <button onClick={this.props.getRandomGoal}>Show me another</button> 
-        </p>
+            <button className="anotherButton" onClick={this.props.getRandomGoal}>Show me another</button> 
+          </div>
+        </section>
 
         {/* // LIST OF ITEMS */}
-        <ul>
-            {this.renderGoals(this.props.goalsArray)}
-        </ul>
+        <section className="itemList">
+          <div className="internalListDiv wrapper">
+            <h2>The Ideas</h2>
+            <ul>
+                {this.renderGoals(this.props.goalsArray)}
+            </ul>
+          </div>
+        </section>
 
-      </div>
+      </Fragment>
     );
   }
 }
