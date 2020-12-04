@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/stephen-thomas-project-five/static/css/main.19e6b6ce.chunk.css",
+    "main.css": "/stephen-thomas-project-five/static/css/main.81bec912.chunk.css",
     "main.js": "/stephen-thomas-project-five/static/js/main.da133571.chunk.js",
     "main.js.map": "/stephen-thomas-project-five/static/js/main.da133571.chunk.js.map",
     "runtime-main.js": "/stephen-thomas-project-five/static/js/runtime-main.ebaffffe.js",
@@ -10,13 +10,13 @@
     "static/js/3.11ee91a7.chunk.js": "/stephen-thomas-project-five/static/js/3.11ee91a7.chunk.js",
     "static/js/3.11ee91a7.chunk.js.map": "/stephen-thomas-project-five/static/js/3.11ee91a7.chunk.js.map",
     "index.html": "/stephen-thomas-project-five/index.html",
-    "static/css/main.19e6b6ce.chunk.css.map": "/stephen-thomas-project-five/static/css/main.19e6b6ce.chunk.css.map",
+    "static/css/main.81bec912.chunk.css.map": "/stephen-thomas-project-five/static/css/main.81bec912.chunk.css.map",
     "static/js/2.bd53e9a5.chunk.js.LICENSE.txt": "/stephen-thomas-project-five/static/js/2.bd53e9a5.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.ebaffffe.js",
     "static/js/2.bd53e9a5.chunk.js",
-    "static/css/main.19e6b6ce.chunk.css",
+    "static/css/main.81bec912.chunk.css",
     "static/js/main.da133571.chunk.js"
   ]
 }
