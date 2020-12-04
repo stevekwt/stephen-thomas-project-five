@@ -5,6 +5,7 @@ class DisplayForm extends Component {
     super(props);
     this.state = {
       userInput: "",
+      charsLeft: 1000,
       nameInput: "",
       selectedChoice: 'placeholder'
     };
@@ -14,30 +15,34 @@ class DisplayForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    // destructure firebase function object from this.props
-    const { updateFirebase } = this.props;
-    const timeSubmittedinMS = Date.now();
-    console.log(`timeSubmittedinMS`, timeSubmittedinMS);
-    const millisecondDateFormatted = new Date(timeSubmittedinMS);
-    console.log(`millisecondDateFormatted`, millisecondDateFormatted);
-    const humanDateAndTime = millisecondDateFormatted.toLocaleString();
-    console.log(`humanDateAndTime is`, humanDateAndTime);
-    // const humanTime = Date(date);
-    // console.log(`humanTime`, humanTime);
-    const thingGoingToFirebase = { 
-      item: this.state.userInput, 
-      date: humanDateAndTime,
-      name: this.state.nameInput
+    if (this.state.userInput.length >= 20 && this.state.userInput.length <= 1000 && this.state.nameInput.length >= 1){
+      // destructure firebase function object from this.props
+      const { updateFirebase } = this.props;
+      const timeSubmittedinMS = Date.now();
+      const thingGoingToFirebase = { 
+        item: this.state.userInput, 
+        date: timeSubmittedinMS,
+        name: this.state.nameInput
+      }
+      updateFirebase(thingGoingToFirebase);
+      // clear the text input field
+      document.querySelector("input").value = "";
+      this.setState({
+        userInput: "",
+        nameInput: ""
+      })
     }
-    updateFirebase(thingGoingToFirebase);
-    // clear the text input field
-    document.querySelector("input").value = "";
   };
 
   handleInputChange = (e) => {
     this.setState({
-      userInput: e.target.value,
+      userInput: e.target.value
     });
+    setTimeout(() => {
+      this.setState({
+        charsLeft: 1000 - this.state.userInput.length
+      });
+    },20)
   };
   handleNameChange = (e) => {
     this.setState({
@@ -52,14 +57,16 @@ class DisplayForm extends Component {
   };
 
   renderGoals = (goalsArray) => {
-    if (!goalsArray.length) return <li>No goals to show</li>;
+    if (!goalsArray.length) return <li>No ideas to show</li>;
     return goalsArray.map(({ date, item, name }) => {
+      const bigWordyDateAndTime = new Date(date);
+      const conciseNumbersDateAndTime = bigWordyDateAndTime.toLocaleString();
       return (
         <li key={date}>
           <p><span className="ideaSpan">{item}</span></p>
           {/* <span> -- </span> */}
           <p className="attribution">
-            Added by <span className="dateSpan">{name}</span> on <span className="dateSpan">{date}</span>
+            Added by <span className="dateSpan">{name}</span> on <span className="dateSpan">{conciseNumbersDateAndTime}</span>
           </p>
           {/* <button onClick={() => this.removeGoal(item)}>remove</button> */}
         </li>
@@ -102,7 +109,6 @@ class DisplayForm extends Component {
     this.setState({
       selectedChoice: e.target.value
     })
-    // this.changeDateOrder(this.state.selectedChoice);
     this.changeDateOrder(e.target.value);
   }
   
@@ -115,13 +121,19 @@ class DisplayForm extends Component {
           <div className="internalFormDiv wrapper">
           <form action="">
 
-            <label htmlFor="newGoal" className="newGoal" >What do you want someone to write about? </label>
+            <label htmlFor="newGoal" className="srOnly" >What do you want someone to write about? 20 characters minimum — but go wild! Get as in-depth as you like. (Max 1000 characters, though.) </label>
 
-            <textarea id="newGoal" className="ideaTextField" placeholder="Something world-explaining..?" onChange={this.handleInputChange} required />
+            <p className="newGoal" aria-hidden="true">What do you want someone to write about?</p>
+
+            <textarea id="newGoal" className="ideaTextField" placeholder="20 characters minimum — but go wild! Get as in-depth as you like." onChange={this.handleInputChange} minLength="20" />
+
+            <p className="charCount"> {this.state.userInput.length <= 1000 ? `${this.state.charsLeft} characters left` : "Too many characters"}</p>
 
             <div className="nameAndButton">
 
-              <input type="text" id="name" className="nameField" placeholder="Your Name" onChange={this.handleNameChange} required />
+              <label htmlFor="name" className="srOnly" >Your Name (required) </label>
+
+              <input type="text" id="name" className="nameField" placeholder="Your Name" onChange={this.handleNameChange} minLength="1" />
 
               <button className="addButton" onClick={this.handleSubmit}>Add</button>   
 
