@@ -7,7 +7,7 @@ class DisplayForm extends Component {
       userInput: "",
       charsLeft: 1000,
       nameInput: "",
-      selectedChoice: 'placeholder'
+      selectedOrderingChoice: 'placeholder'
     };
   }
 
@@ -26,7 +26,7 @@ class DisplayForm extends Component {
       }
       updateFirebase(thingGoingToFirebase);
       // clear the text input field
-      document.querySelector("input").value = "";
+      document.querySelector("textarea").value = "";
       this.setState({
         userInput: "",
         nameInput: ""
@@ -58,6 +58,8 @@ class DisplayForm extends Component {
 
   renderGoals = (goalsArray) => {
     if (!goalsArray.length) return <li>No ideas to show</li>;
+    // call changeDateOrder here, except solve the recursion problem
+    // this.changeDateOrder();
     return goalsArray.map(({ date, item, name }) => {
       const bigWordyDateAndTime = new Date(date);
       const conciseNumbersDateAndTime = bigWordyDateAndTime.toLocaleString();
@@ -75,8 +77,7 @@ class DisplayForm extends Component {
   };
 
   changeDateOrder = (orderDirection) => {
-    console.log(`i'm in changeDateOrder`, orderDirection);
-    console.log(this.props.goalsArray);
+    if (orderDirection === null) { orderDirection = this.state.selectedOrderingChoice};
     const oldestFirst = ( a, b ) => {
       if ( a.date < b.date ){
         return -1;
@@ -104,12 +105,13 @@ class DisplayForm extends Component {
     this.renderGoals(this.props.goalsArray)
   }
 
-  handleChange = (e) => {
+  handleDateOrderingChange = (e) => {
     e.preventDefault();
     this.setState({
-      selectedChoice: e.target.value
+      selectedOrderingChoice: e.target.value
     })
     this.changeDateOrder(e.target.value);
+    // this.renderGoals(this.props.goalsArray);
   }
   
   render() {
@@ -164,8 +166,8 @@ class DisplayForm extends Component {
                 <select 
                     name="orderByDate" 
                     id="orderByDate" 
-                    onChange={this.handleChange}
-                    value={this.state.selectedChoice} >
+                    onChange={this.handleDateOrderingChange}
+                    value={this.state.selectedOrderingChoice} >
                         <option value="placeholder" disabled>Order By:</option>
                         <option value="newest">Newest</option>
                         <option value="oldest">Oldest</option>
@@ -173,6 +175,7 @@ class DisplayForm extends Component {
             </form>
 
             <ul>
+                {/* { this.state.selectedOrderingChoice="newest" ? this.changeDateOrder() : this.renderGoals(this.props.goalsArray)} */}
                 {this.renderGoals(this.props.goalsArray)}
             </ul>
           </div>
