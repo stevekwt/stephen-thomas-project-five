@@ -73,7 +73,9 @@ class App extends Component {
     return (
       <Fragment>
         <header>
-          <h1>Essay Idea DB</h1>
+          <div className="internalHeader wrapper">
+            <h1>Essay Idea DB</h1>
+          </div>
         </header>
 
         <DisplayForm

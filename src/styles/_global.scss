@@ -1,9 +1,9 @@
-body, button {
+body, button, input {
     font-family: 'Kameron', serif;
 }
 
 body {
-    background-color: black;
+    background-color: white;
     font-size: 62.5%;
     font-size: 1.2rem;
 }
@@ -11,7 +11,12 @@ body {
 header {
     background-color: white;
     margin: 0;
-    padding: 50px;
+    .internalHeader {
+        padding: 20px;
+        border-right: 10px solid black;
+        border-left: 10px solid black;
+        border-top: 10px solid black;
+    }
 }
 
 section, div {
@@ -29,7 +34,15 @@ section, div {
 h1 {
     text-align: center;
     margin: 0;
-    font-family: 'Permanent Marker', cursive;
+    // font-family: 'Permanent Marker', cursive;
+    // font-family: 'Kameron', serif;
+    // font-family: 'Alfa Slab One', cursive;
+    font-family: 'Cormorant', serif;
+    text-transform: uppercase;
+    font-size: 7rem;
+    // text-decoration: underline;
+    // box-shadow: 2px 2px rgb(131, 236, 247);
+    // text-shadow: 0 0 10px rgb(131, 236, 247),0 0 10px rgb(131, 236, 247),0 0 10px rgb(131, 236, 247),0 0 10px rgb(131, 236, 247),0 0 10px rgb(131, 236, 247),0 0 10px rgb(131, 236, 247),0 0 10px rgb(131, 236, 247);
 }
 
 button {
@@ -40,10 +53,12 @@ button {
 }
 
 .inputFormSection {
-    background-color: black;
+    background-color: white;
     .internalFormDiv {
         background-color: white;
         padding: 0 0 40px;
+        border-right: 10px solid black;
+        border-left: 10px solid black;
         form {
             // box-shadow: 2px 2px black;
             text-align: center;
@@ -93,10 +108,13 @@ button {
 
 
 .itemList {
-    background-color: black;
+    background-color: white;
 }
 .internalListDiv {
     background-color: white;
+    border-right: 10px solid black;
+    border-left: 10px solid black;
+    border-bottom: 10px solid black;
     padding: 10px 40px;
     h2 {
         margin: 5px 0;
