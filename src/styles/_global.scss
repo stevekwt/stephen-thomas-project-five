@@ -165,4 +165,16 @@ ul {
     .wrapper {
         width: 97%;
     }
+    .internalRandomDiv {
+        .randomIntroText {
+            min-width: 85px;
+            max-width: 85px;
+            font-size: 1.5rem;
+        }
+    }
+    .anotherButton {
+        font-size: 1.5rem;
+        width: 110px;
+        margin-left: 10px;
+    }
 }
