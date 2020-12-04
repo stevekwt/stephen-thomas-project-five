@@ -44,15 +44,16 @@ class App extends Component {
       if (firebaseDataObj === null) {
         return this.setState({ goalsArray: [] });
       }
-      const goalsArray = Object.entries(firebaseDataObj).map(([id, value]) => {
-        return { id, value };
+      const goalsArray = Object.values(firebaseDataObj)
+      console.log(goalsArray);
+      this.setState({
+        goalsArray: goalsArray
       });
-      this.setState({ goalsArray });
+      console.log(this.state.goalsArray);
       if (this.state.randomGoal === '') {
         this.getRandomGoal();
       } 
     });
-    
   }
 
   componentWillUnmount() {
@@ -61,9 +62,12 @@ class App extends Component {
   }
 
   getRandomGoal = () => {
+    console.log(`inside getrandomgoals function`);
     const goalsArray = this.state.goalsArray;
+    console.log(`goalsArray`, goalsArray);
     const randomArrayIndex = Math.floor(Math.random() * goalsArray.length);
-    const randomItem = goalsArray[randomArrayIndex]?.value; 
+    const randomItem = goalsArray[randomArrayIndex]?.item; 
+    console.log(randomItem);
     this.setState({
       randomGoal: randomItem
     })

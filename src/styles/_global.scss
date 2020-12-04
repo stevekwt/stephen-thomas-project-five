@@ -1,4 +1,4 @@
-body, button, input {
+body, button, input, select {
     font-family: 'Kameron', serif;
 }
 
@@ -56,7 +56,7 @@ button {
     background-color: white;
     .internalFormDiv {
         background-color: white;
-        padding: 0 0 40px;
+        padding: 0 0 28px;
         border-right: 10px solid black;
         border-left: 10px solid black;
         form {
@@ -67,18 +67,19 @@ button {
             font-size: 1.7rem;
         }
         .textAndButton {
-            height: 50px;
+            // height: 50px;
         }
         .ideaTextField {
             border: 2px solid #000;
             margin: 15px 0;
             padding: 10px;
-            width: 500px;
-            height: 100%;
+            // height: 100%;
+            height: 50px;
         }
         .addButton {
-            height: 100%;
+            // height: 100%;
             padding: 0 30px;
+            height: 50px;
         }
     }
 }
@@ -91,18 +92,21 @@ button {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     padding: 40px;
     .randomIntroText {
         width: 70px;
-        font-size: 1.7rem;
+        font-size: 2rem;
     }
     .randomEssayIdea {
         font-weight: bold;
     }
     .anotherButton {
-        padding: 20px 10px;
+        padding: 12px 10px;
         border: 1px solid grey;
         border-radius: 20px;
+        font-size: 1.5rem;
+        width: 110px;
     }
 }
 
@@ -117,18 +121,29 @@ button {
     border-bottom: 10px solid black;
     padding: 10px 40px;
     h2 {
-        margin: 5px 0;
+        margin: 5px 0 0 0;
         text-align: center;
+    }
+    form {
+        display: flex;
+        justify-content: right;
     }
 }
 ul {
   padding: 0;
     li {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
+        align-items: flex-start;
+        // justify-content: space-between;
         border: 1px solid lightgray;
         padding: 10px;
         box-shadow: 2px 2px black;
         margin: 10px 0;
+        .dateSpan {
+            color: gray;
+            align-self: flex-end;
+            font-size: 1rem;
+        }
     }
 }

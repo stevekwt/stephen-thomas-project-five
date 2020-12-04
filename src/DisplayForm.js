@@ -1,11 +1,11 @@
 import "./App.scss";
-// import firebase from "./firebase.js";
 import { Component, Fragment } from "react";
 class DisplayForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userInput: "",
+      selectedChoice: 'placeholder'
     };
   }
 
@@ -15,7 +15,19 @@ class DisplayForm extends Component {
     e.preventDefault();
     // destructure firebase function object from this.props
     const { updateFirebase } = this.props;
-    updateFirebase(this.state.userInput);
+    const timeSubmittedinMS = Date.now();
+    console.log(`timeSubmittedinMS`, timeSubmittedinMS);
+    const humanDate = new Date(timeSubmittedinMS);
+    console.log(`humanDate`, humanDate);
+    const humantimeaa = humanDate.toLocaleString();
+    console.log(`humantimeaa is`, humantimeaa);
+    // const humanTime = Date(date);
+    // console.log(`humanTime`, humanTime);
+    const thingGoingToFirebase = { 
+      item: this.state.userInput, 
+      date: humantimeaa 
+    }
+    updateFirebase(thingGoingToFirebase);
     // clear the text input field
     document.querySelector("input").value = "";
   };
@@ -34,16 +46,57 @@ class DisplayForm extends Component {
 
   renderGoals = (goalsArray) => {
     if (!goalsArray.length) return <li>No goals to show</li>;
-    return goalsArray.map(({ id, value }) => {
+    return goalsArray.map(({ date, item }) => {
       return (
-        <li key={id}>
-          {value}
-          <button onClick={() => this.removeGoal(id)}>remove</button>
+        <li key={date}>
+          <p><span className="ideaSpan">{item}</span></p>
+          {/* <span> -- </span> */}
+          <span className="dateSpan">{date}</span>
+          {/* <button onClick={() => this.removeGoal(item)}>remove</button> */}
         </li>
       );
     });
   };
 
+  changeDateOrder = (orderDirection) => {
+    console.log(`i'm in changeDateOrder`, orderDirection);
+    console.log(this.props.goalsArray);
+    const oldestFirst = ( a, b ) => {
+      if ( a.date < b.date ){
+        return -1;
+      }
+      if ( a.date > b.date ){
+        return 1;
+      }
+      return 0;
+    }
+    const newestFirst = ( b, a ) => {
+      if ( a.date < b.date ){
+        return -1;
+      }
+      if ( a.date > b.date ){
+        return 1;
+      }
+      return 0;
+    }
+    if (orderDirection === "newest") {
+      this.props.goalsArray.sort(newestFirst)
+    } else {
+      this.props.goalsArray.sort(oldestFirst)
+    }
+    console.log(`this.props.goalsArray after sort`, this.props.goalsArray);
+    this.renderGoals(this.props.goalsArray)
+  }
+
+  handleChange = (e) => {
+    e.preventDefault();
+    this.setState({
+      selectedChoice: e.target.value
+    })
+    // this.changeDateOrder(this.state.selectedChoice);
+    this.changeDateOrder(e.target.value);
+  }
+  
   render() {
     return (
       <Fragment>
@@ -57,7 +110,7 @@ class DisplayForm extends Component {
 
             <div className="textAndButton">
 
-              <input type="text" id="newGoal" className="ideaTextField" placeholder="Something that helps explain the world..?" onChange={this.handleInputChange} />
+              <input type="text" id="newGoal" className="ideaTextField" placeholder="Something world-explaining..?" onChange={this.handleInputChange} />
 
               <button className="addButton" onClick={this.handleSubmit}>Add</button>
 
@@ -83,6 +136,20 @@ class DisplayForm extends Component {
         <section className="itemList">
           <div className="internalListDiv wrapper">
             <h2>The Ideas</h2>
+
+            <form>
+                <label htmlFor="orderByDate" className="srOnly">Order by:</label>
+                <select 
+                    name="orderByDate" 
+                    id="orderByDate" 
+                    onChange={this.handleChange}
+                    value={this.state.selectedChoice} >
+                        <option value="placeholder" disabled>Order By:</option>
+                        <option value="newest">Newest</option>
+                        <option value="oldest">Oldest</option>
+                </select>
+            </form>
+
             <ul>
                 {this.renderGoals(this.props.goalsArray)}
             </ul>
