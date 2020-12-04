@@ -1,4 +1,4 @@
-body, button, input, select {
+body, button, input, select, textarea {
     font-family: 'Kameron', serif;
 }
 
@@ -26,30 +26,21 @@ section, div {
 
 .wrapper {
     width: 60%;
-    // max-width: 400px;
     margin: 0 auto;
-    // border: 1px solid red;
 }
 
 h1 {
     text-align: center;
     margin: 0;
-    // font-family: 'Permanent Marker', cursive;
-    // font-family: 'Kameron', serif;
-    // font-family: 'Alfa Slab One', cursive;
     font-family: 'Cormorant', serif;
     text-transform: uppercase;
     font-size: 7rem;
-    // text-decoration: underline;
-    // box-shadow: 2px 2px rgb(131, 236, 247);
-    // text-shadow: 0 0 10px rgb(131, 236, 247),0 0 10px rgb(131, 236, 247),0 0 10px rgb(131, 236, 247),0 0 10px rgb(131, 236, 247),0 0 10px rgb(131, 236, 247),0 0 10px rgb(131, 236, 247),0 0 10px rgb(131, 236, 247);
 }
 
 button {
     border: none;
     align-self: center;
     cursor: pointer;
-    //   margin-left: 15px;
 }
 
 .inputFormSection {
@@ -60,21 +51,32 @@ button {
         border-right: 10px solid black;
         border-left: 10px solid black;
         form {
-            // box-shadow: 2px 2px black;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            // align-items: center;
+            margin: 0 40px;
         }
         .newGoal {
             font-size: 1.7rem;
         }
-        .textAndButton {
-            // height: 50px;
-        }
+        // .textAndButton {
+        //     // height: 50px;
+        // }
         .ideaTextField {
             border: 2px solid #000;
-            margin: 15px 0;
+            margin: 5px 0 10px;
             padding: 10px;
             // height: 100%;
+            height: 100px;
+            resize: none;
+        }
+        .nameField {
             height: 50px;
+            padding: 10px;
+            width: 70%;
+            // align-self: center;
+            // margin-bottom: 10px;
         }
         .addButton {
             // height: 100%;
@@ -93,13 +95,15 @@ button {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 40px;
+    padding: 20px;
     .randomIntroText {
-        width: 70px;
+        min-width: 120px;
+        max-width: 120px;
         font-size: 2rem;
     }
     .randomEssayIdea {
         font-weight: bold;
+        padding: 10px;
     }
     .anotherButton {
         padding: 12px 10px;
@@ -107,6 +111,7 @@ button {
         border-radius: 20px;
         font-size: 1.5rem;
         width: 110px;
+        margin-left: 10px;
     }
 }
 
@@ -140,10 +145,13 @@ ul {
         padding: 10px;
         box-shadow: 2px 2px black;
         margin: 10px 0;
-        .dateSpan {
-            color: gray;
+        .attribution {
             align-self: flex-end;
             font-size: 1rem;
+            color: gray;
+        }
+        .dateSpan {
+            color: black;
         }
     }
 }

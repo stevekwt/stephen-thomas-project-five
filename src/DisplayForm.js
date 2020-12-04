@@ -5,6 +5,7 @@ class DisplayForm extends Component {
     super(props);
     this.state = {
       userInput: "",
+      nameInput: "",
       selectedChoice: 'placeholder'
     };
   }
@@ -17,15 +18,16 @@ class DisplayForm extends Component {
     const { updateFirebase } = this.props;
     const timeSubmittedinMS = Date.now();
     console.log(`timeSubmittedinMS`, timeSubmittedinMS);
-    const humanDate = new Date(timeSubmittedinMS);
-    console.log(`humanDate`, humanDate);
-    const humantimeaa = humanDate.toLocaleString();
-    console.log(`humantimeaa is`, humantimeaa);
+    const millisecondDateFormatted = new Date(timeSubmittedinMS);
+    console.log(`millisecondDateFormatted`, millisecondDateFormatted);
+    const humanDateAndTime = millisecondDateFormatted.toLocaleString();
+    console.log(`humanDateAndTime is`, humanDateAndTime);
     // const humanTime = Date(date);
     // console.log(`humanTime`, humanTime);
     const thingGoingToFirebase = { 
       item: this.state.userInput, 
-      date: humantimeaa 
+      date: humanDateAndTime,
+      name: this.state.nameInput
     }
     updateFirebase(thingGoingToFirebase);
     // clear the text input field
@@ -37,6 +39,11 @@ class DisplayForm extends Component {
       userInput: e.target.value,
     });
   };
+  handleNameChange = (e) => {
+    this.setState({
+      nameInput: e.target.value,
+    });
+  };
 
   removeGoal = (goalId) => {
     if (!goalId) return;
@@ -46,12 +53,14 @@ class DisplayForm extends Component {
 
   renderGoals = (goalsArray) => {
     if (!goalsArray.length) return <li>No goals to show</li>;
-    return goalsArray.map(({ date, item }) => {
+    return goalsArray.map(({ date, item, name }) => {
       return (
         <li key={date}>
           <p><span className="ideaSpan">{item}</span></p>
           {/* <span> -- </span> */}
-          <span className="dateSpan">{date}</span>
+          <p className="attribution">
+            Added by <span className="dateSpan">{name}</span> on <span className="dateSpan">{date}</span>
+          </p>
           {/* <button onClick={() => this.removeGoal(item)}>remove</button> */}
         </li>
       );
@@ -108,14 +117,15 @@ class DisplayForm extends Component {
 
             <label htmlFor="newGoal" className="newGoal" >What do you want someone to write about? </label>
 
-            <div className="textAndButton">
+            <textarea id="newGoal" className="ideaTextField" placeholder="Something world-explaining..?" onChange={this.handleInputChange} required />
 
-              <input type="text" id="newGoal" className="ideaTextField" placeholder="Something world-explaining..?" onChange={this.handleInputChange} />
+            <div className="nameAndButton">
 
-              <button className="addButton" onClick={this.handleSubmit}>Add</button>
+              <input type="text" id="name" className="nameField" placeholder="Your Name" onChange={this.handleNameChange} required />
 
-            </div>
-            
+              <button className="addButton" onClick={this.handleSubmit}>Add</button>   
+
+            </div>         
 
           </form>
           </div>
