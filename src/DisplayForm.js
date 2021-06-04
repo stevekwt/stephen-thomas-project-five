@@ -101,7 +101,7 @@ class DisplayForm extends Component {
     } else {
       this.props.goalsArray.sort(oldestFirst)
     }
-    console.log(`this.props.goalsArray after sort`, this.props.goalsArray);
+    // console.log(`this.props.goalsArray after sort`, this.props.goalsArray);
     this.renderGoals(this.props.goalsArray)
   }
 
@@ -135,7 +135,7 @@ class DisplayForm extends Component {
 
               <label htmlFor="name" className="srOnly" >Your Name (required) </label>
 
-              <input type="text" id="name" className="nameField" placeholder="Your Name" onChange={this.handleNameChange} minLength="1" />
+              <input type="text" id="name" className="nameField" placeholder="Your Name (required)" onChange={this.handleNameChange} minLength="1" />
 
               <button className="addButton" onClick={this.handleSubmit}>Add</button>   
 

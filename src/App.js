@@ -40,16 +40,16 @@ class App extends Component {
     const dbRef = this.firebaseRef();
     dbRef.on("value", (snapshot) => {
       const firebaseDataObj = snapshot.val();
-      console.log(firebaseDataObj);
+      // console.log(firebaseDataObj);
       if (firebaseDataObj === null) {
         return this.setState({ goalsArray: [] });
       }
       const goalsArray = Object.values(firebaseDataObj)
-      console.log(goalsArray);
+      // console.log(goalsArray);
       this.setState({
         goalsArray: goalsArray
       });
-      console.log(this.state.goalsArray);
+      // console.log(this.state.goalsArray);
       if (this.state.randomGoal === '') {
         this.getRandomGoal();
       } 
@@ -62,12 +62,12 @@ class App extends Component {
   }
 
   getRandomGoal = () => {
-    console.log(`inside getrandomgoals function`);
+    // console.log(`inside getrandomgoals function`);
     const goalsArray = this.state.goalsArray;
-    console.log(`goalsArray`, goalsArray);
+    // console.log(`goalsArray`, goalsArray);
     const randomArrayIndex = Math.floor(Math.random() * goalsArray.length);
     const randomItem = goalsArray[randomArrayIndex]?.item; 
-    console.log(randomItem);
+    // console.log(randomItem);
     this.setState({
       randomGoal: randomItem
     })
