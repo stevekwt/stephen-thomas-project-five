@@ -101,7 +101,7 @@ class DisplayForm extends Component {
     } else {
       this.props.goalsArray.sort(oldestFirst)
     }
-    console.log(`this.props.goalsArray after sort`, this.props.goalsArray);
+    // console.log(`this.props.goalsArray after sort`, this.props.goalsArray);
     this.renderGoals(this.props.goalsArray)
   }
 
